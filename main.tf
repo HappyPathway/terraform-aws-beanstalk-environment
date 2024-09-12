@@ -380,7 +380,7 @@ locals {
         value     = join(",", sort(var.loadbalancer_security_groups))
       }
     ],
-    var.loadbalancer_managed_security_group != "" ? 
+    var.loadbalancer_managed_security_group != "" ?
     [
       {
         namespace = "aws:elb:loadbalancer"
@@ -400,7 +400,7 @@ locals {
         value     = var.application_port
       }
     ],
-    var.loadbalancer_certificate_arn != "" ? 
+    var.loadbalancer_certificate_arn != "" ?
     [
       {
         namespace = "aws:elb:listener"
@@ -456,7 +456,7 @@ locals {
         name      = "ConnectionDrainingEnabled"
         value     = "true"
       }
-    ])
+  ])
 
   generic_alb_settings = [
     {
@@ -577,35 +577,35 @@ locals {
       name      = "Protocol"
       value     = var.loadbalancer_type == "network" ? "TCP" : "HTTP"
     }
-  ],
-  var.elb_scheme != "" && var.environment_type == "LoadBalanced" ? [
-    {
-      namespace = "aws:ec2:vpc"
-      name      = "ELBScheme"
-      value     = var.elb_scheme
-    }
-  ] : [],
-  [
-    {
-      namespace = "aws:elasticbeanstalk:environment:process:default"
-      name      = "HealthCheckPath"
-      value     = var.healthcheck_url
-    },
-    {
-      namespace = "aws:elasticbeanstalk:environment:process:default"
-      name      = "HealthCheckInterval"
-      value     = var.healthcheck_interval
-    },
-    {
-      namespace = "aws:elasticbeanstalk:environment:process:default"
-      name      = "HealthyThresholdCount"
-      value     = var.healthcheck_healthy_threshold_count
-    },
-    {
-      namespace = "aws:elasticbeanstalk:environment:process:default"
-      name      = "UnhealthyThresholdCount"
-      value     = var.healthcheck_unhealthy_threshold_count
-    }
+    ],
+    var.elb_scheme != "" && var.environment_type == "LoadBalanced" ? [
+      {
+        namespace = "aws:ec2:vpc"
+        name      = "ELBScheme"
+        value     = var.elb_scheme
+      }
+    ] : [],
+    [
+      {
+        namespace = "aws:elasticbeanstalk:environment:process:default"
+        name      = "HealthCheckPath"
+        value     = var.healthcheck_url
+      },
+      {
+        namespace = "aws:elasticbeanstalk:environment:process:default"
+        name      = "HealthCheckInterval"
+        value     = var.healthcheck_interval
+      },
+      {
+        namespace = "aws:elasticbeanstalk:environment:process:default"
+        name      = "HealthyThresholdCount"
+        value     = var.healthcheck_healthy_threshold_count
+      },
+      {
+        namespace = "aws:elasticbeanstalk:environment:process:default"
+        name      = "UnhealthyThresholdCount"
+        value     = var.healthcheck_unhealthy_threshold_count
+      }
   ])
 
   # Select elb configuration depending on loadbalancer_type
